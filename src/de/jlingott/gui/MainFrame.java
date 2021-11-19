@@ -44,7 +44,7 @@ public class MainFrame extends JFrame{
     private JLabel lblAge;
     private JLabel lblAdress;
 
-    private JPanel panel;
+    private JPanel penelInputs;
     //endregion
 
     //region 3. Konstruktor
@@ -74,9 +74,9 @@ public class MainFrame extends JFrame{
 
         selectContact();
 
-        clearButton();
+        handleClearButton();
 
-        deleteButton();
+        handleDeleteButton();
         //endregion
 
         //mainframe anzeigen
@@ -88,7 +88,7 @@ public class MainFrame extends JFrame{
      * Initialisiert alle Swing Elemente
      */
     private void initSwingElements() {
-        panel = new JPanel();
+        penelInputs = new JPanel();
 
         lblLastName = new JLabel(AppTexts.LABEL_LASTNAME);
         lblName = new JLabel(AppTexts.LABEL_NAME);
@@ -118,7 +118,7 @@ public class MainFrame extends JFrame{
     }
 
     /**
-     * Setzt alle settings der Init Swing Elemente
+     * Setzt alle standard settings der Init Swing Elemente
      */
     private void setupSwingElements() {
         this.setTitle(AppTexts.APPLICATIONNAME);
@@ -150,8 +150,8 @@ public class MainFrame extends JFrame{
 
         txtAreaAdress = setupJTextArea(txtAreaAdress, AppSystemValues.FIRST_COLUMN,AppSystemValues.FOURTH_ROW_INPUT);
 
-        panel.setSize(AppSystemValues.MAINFRAME_DIMENSION);
-        panel.setLayout(null);
+        penelInputs.setSize(AppSystemValues.MAINFRAME_DIMENSION);
+        penelInputs.setLayout(null);
     }
 
     /**
@@ -159,33 +159,33 @@ public class MainFrame extends JFrame{
      */
     private void addSwingElementsToFrame() {
         //elemente dem Panel hinzufügen
-        panel.add(lblName);
-        panel.add(txtName);
+        penelInputs.add(lblName);
+        penelInputs.add(txtName);
 
-        panel.add(lblLastName);
-        panel.add(txtLastName);
+        penelInputs.add(lblLastName);
+        penelInputs.add(txtLastName);
 
-        panel.add(lblTel);
-        panel.add(txtTel);
+        penelInputs.add(lblTel);
+        penelInputs.add(txtTel);
 
-        panel.add(lblMail);
-        panel.add(txtMail);
+        penelInputs.add(lblMail);
+        penelInputs.add(txtMail);
 
-        panel.add(lblBday);
-        panel.add(txtBday);
+        penelInputs.add(lblBday);
+        penelInputs.add(txtBday);
 
-        panel.add(lblAdress);
-        panel.add(txtAreaAdress);
+        penelInputs.add(lblAdress);
+        penelInputs.add(txtAreaAdress);
 
-        panel.add(lblAge);
-        panel.add(numberAge);
+        penelInputs.add(lblAge);
+        penelInputs.add(numberAge);
 
         // elemente Mainframe hinzufügen
         this.add(listContactSelection);
         this.add(btnCreateChangeContact);
         this.add(btnClearContact);
         this.add(btnDeleteContact);
-        this.add(panel);
+        this.add(penelInputs);
     }
     //endregion
 
@@ -195,6 +195,7 @@ public class MainFrame extends JFrame{
      * zudem aktuellisiert er die JList
      */
     private void handleCreateChangeButton() {
+
         btnCreateChangeContact.addActionListener(e -> {
 
             String strLastName = txtLastName.getText();
@@ -204,6 +205,7 @@ public class MainFrame extends JFrame{
             String strBday = txtBday.getText();
             String strAdress = txtAreaAdress.getText();
 
+            //input in integer umwandeln
             int iAge = Integer.valueOf(numberAge.getText());
             int contactIndex = listContactSelection.getSelectedIndex();
 
@@ -211,29 +213,35 @@ public class MainFrame extends JFrame{
             strAdress = textAreaFormatter(AppSystemValues.FORMATTER_FOR_CSV, strAdress);
 
             if(contactSelected(contactIndex)){
-                //Datensatz Ändern
+
+                //Datensatz ändern
                 Contact contact = contactsList.get(contactIndex);
                 contact.changeAttributesFromCsvLine(strName,strLastName,strTel,strMail,strBday,iAge,strAdress);
             }else{
-                //Datensatz Speichern
+
+                //Datensatz speichern
                 contactsList.add(new Contact(strName,strLastName,strTel,strMail,strBday,iAge,strAdress));
+
+                //aktueller Datensatz der JListe der erstellt wurde
+                contactIndex = (contactsList.size()-1);
             }
             CsvFileHandler.getOnlyOneInstanceEver().saveToCsv(contactsList);
 
             //JListe Aktuellisieren
             listContactSelection.setListData(contactsList.toArray());
 
+            //JList Kontakt auswählen
+            listContactSelection.setSelectedIndex(contactIndex);
+
         });
     }
     //endregion
 
     //region 4.3 Delete Contact BTN
-
     /**
      * BTN Funktion um Kontakte zu löschen
-     *
      */
-    private void deleteButton() {
+    private void handleDeleteButton() {
 
         btnDeleteContact.addActionListener(e -> {
 
@@ -260,7 +268,7 @@ public class MainFrame extends JFrame{
      * Diese Funktion hebt die auswahl der Liste auf zudem setzt er alle eingabefelder auf null
      *
      */
-    private void clearButton() {
+    private void handleClearButton() {
         btnClearContact.addActionListener(e -> {
             clear();
         });
