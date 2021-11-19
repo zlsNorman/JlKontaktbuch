@@ -271,15 +271,15 @@ public class MainFrame extends JFrame{
      */
     private void clear() {
             listContactSelection.clearSelection();
-            txtName.setText("");
-            txtLastName.setText("");
-            txtTel.setText("");
-            txtMail.setText("");
-            txtBday.setText("");
-            numberAge.setText("0");
-            txtAreaAdress.setText("");
+            txtName.setText(AppSystemValues.EMPTY_STRING);
+            txtLastName.setText(AppSystemValues.EMPTY_STRING);
+            txtTel.setText(AppSystemValues.EMPTY_STRING);
+            txtMail.setText(AppSystemValues.EMPTY_STRING);
+            txtBday.setText(AppSystemValues.EMPTY_STRING);
+            numberAge.setText(AppSystemValues.EMPTY_INT);
+            txtAreaAdress.setText(AppSystemValues.EMPTY_STRING);
 
-            toggleButtons(false);
+            toggleButtons(AppSystemValues.BUTTON_DISABLED);
             btnCreateChangeContact.setText(AppTexts.BTN_TEXT_CREATE_CONTACT);
     }
     //endregion

@@ -6,8 +6,11 @@ public class AppSystemValues {
     public static String DEFAULT_STRING = ">noValueSetYet<";
     public static int DEFAULT_INT = 0;
     public static String DEFAULT_NUMBERSTRING = "0";
-    public static String CSV_SPLIT_CHAR = ";";
 
+    public static String EMPTY_INT = "0";
+    public static String EMPTY_STRING = "";
+
+    public static String CSV_SPLIT_CHAR = ";";
     public static final String FILE_PATH_CSV = "src/de/jlingott/resources/Contacts.csv";
 
     public static final int FIRST_COLUMN = 320;
@@ -31,6 +34,7 @@ public class AppSystemValues {
     public static final Dimension LABEL_DIMENSION = new Dimension(200,30);
 
     public static final int NO_CONTACT_SELECTED = -1;
+
     public static final boolean BUTTON_ENABLED = true;
     public static final boolean BUTTON_DISABLED = false;
 
